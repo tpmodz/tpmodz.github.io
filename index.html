@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday MT</title>
+    <style>
+        :root { --primary: #ff85a2; --accent: #ff4081; }
+        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: #fff5f7; overflow: hidden; }
+
+        /* Màn hình mật khẩu */
+        #password-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: white; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 2000;
+        }
+        .banner-img { width: 85%; max-width: 350px; border-radius: 20px; margin-bottom: 20px; }
+        
+        .input-group { text-align: center; position: relative; }
+        input[type="text"] {
+            padding: 15px; font-size: 24px; border: 3px solid var(--primary);
+            border-radius: 30px; outline: none; text-align: center; width: 180px;
+            display: block; margin: 0 auto 15px; transition: 0.3s;
+        }
+        /* Hiệu ứng rung khi sai */
+        .shake { animation: shake 0.4s; border-color: red !important; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .btn-confirm {
+            background: var(--primary); color: white; border: none;
+            padding: 12px 40px; border-radius: 25px; font-weight: bold;
+            cursor: pointer; box-shadow: 0 5px 15px rgba(255, 133, 162, 0.4);
+        }
+
+        /* Trang chính */
+        #main-content { display: none; opacity: 0; transition: 1s; padding: 20px; text-align: center; }
+        .celebration-row { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        .side-photo { width: 180px; height: 260px; object-fit: cover; border-radius: 15px; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+        
+        .message-box {
+            flex: 1; min-width: 280px; max-width: 450px; background: white;
+            padding: 25px; border-radius: 20px; border: 2px solid var(--primary);
+            line-height: 1.8; font-size: 1.1rem; color: #444;
+        }
+
+        .float-icon { position: fixed; bottom: -50px; animation: rise 6s linear infinite; z-index: 100; }
+        @keyframes rise { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-110vh); opacity: 0; } }
+
+        .music-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; z-index: 1500; }
+    </style>
+</head>
+<body>
+
+    <div id="password-screen">
+        <img src="mt/anhbia.png" class="banner-img">
+        <div class="input-group">
+            <h3 style="color: var(--accent);">Nhập mật khẩu năm sinh trẫm á><</h3>
+            <input type="text" id="pwInput" autocomplete="off" inputmode="numeric">
+            <button class="btn-confirm" onclick="checkPW()">MỞ QUÀ ✨</button>
+        </div>
+    </div>
+
+    <div id="main-content">
+        <h1 style="color: #d81b60;">🎉 Chúc mừng sinh nhật Trẫm nhaaa 🎉</h1>
+        <div class="celebration-row">
+            <img src="mt/image1.png" class="side-photo">
+            <div class="message-box">
+                Chúc Trẫm sinh nhật vui vẻ tràn ngập hạnh phúc và làm được nhiều thứ mình thích. 
+                Tuổi mới xinh đẹp và rực rỡ hơn, không được nóng giận nhaaaa >< 
+                Không được nhịn ăn đó và luôn luôn gặp được điều mình thích, đạt được nhiều ước mơ và nguyện vọng của chính mình! 🎂❤️
+            </div>
+            <img src="mt/image2.png" class="side-photo">
+        </div>
+    </div>
+
+    <div class="music-bar" onclick="toggleMusic()">PHÁT NHẠC (nhạc j97 nha:)</div>
+    <video id="audio" loop style="display:none;"><source src="mt/amthanh.mp4"></video>
+
+    <script>
+        const input = document.getElementById('pwInput');
+        
+        // Nhấn Enter để kiểm tra
+        input.addEventListener('keydown', (e) => { if(e.key === 'Enter') checkPW(); });
+
+        function checkPW() {
+            if (input.value === '2011') {
+                document.getElementById('password-screen').style.display = 'none';
+                const main = document.getElementById('main-content');
+                main.style.display = 'block';
+                setTimeout(() => { main.style.opacity = '1'; document.body.style.overflow = 'auto'; }, 50);
+                startIcons();
+            } else {
+                // Khi sai: Rung ô nhập và bôi đen để nhập lại ngay
+                input.classList.add('shake');
+                setTimeout(() => { 
+                    input.classList.remove('shake'); 
+                    input.value = ''; // Xóa trắng
+                    input.focus();    // Đưa con trỏ vào lại
+                }, 400);
+            }
+        }
+
+        function startIcons() {
+            const icons = ['❤️', '🎉', '✨', '⭐'];
+            setInterval(() => {
+                const el = document.createElement('div');
+                el.className = 'float-icon';
+                el.innerText = icons[Math.floor(Math.random() * icons.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.fontSize = '25px';
+                document.body.appendChild(el);
+                setTimeout(() => el.remove(), 6000);
+            }, 400);
+        }
+
+        let playing = false;
+        function toggleMusic() {
+            const a = document.getElementById('audio');
+            if(!playing) a.play(); else a.pause();
+            playing = !playing;
+            document.querySelector('.music-bar').innerText = playing ? 'DỪNG NHẠC' : 'PHÁT NHẠC';
+        }
+    </script>
+</body>
+</html>
