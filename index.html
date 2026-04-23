@@ -58,18 +58,18 @@
     <div id="password-screen">
         <img src="mt/anhbia.png" class="banner-img">
         <div class="input-group">
-            <h3 style="color: var(--accent);">Nhập mật khẩu năm sinh trẫm á><</h3>
+            <h3 style="color: var(--accent);">Nhập mật khẩu><</h3>
             <input type="text" id="pwInput" autocomplete="off" inputmode="numeric">
             <button class="btn-confirm" onclick="checkPW()">MỞ QUÀ ✨</button>
         </div>
     </div>
 
     <div id="main-content">
-        <h1 style="color: #d81b60;">🎉 Chúc mừng sinh nhật Trẫm nhaaa 🎉</h1>
+        <h1 style="color: #d81b60;">🎉 Chúc mừng sinh nhật nhaaa 🎉</h1>
         <div class="celebration-row">
             <img src="mt/image1.png" class="side-photo">
             <div class="message-box">
-                Chúc Trẫm sinh nhật vui vẻ tràn ngập hạnh phúc và làm được nhiều thứ mình thích. 
+                Chúc sinh nhật vui vẻ tràn ngập hạnh phúc và làm được nhiều thứ mình thích. 
                 Tuổi mới xinh đẹp và rực rỡ hơn, không được nóng giận nhaaaa >< 
                 Không được nhịn ăn đó và luôn luôn gặp được điều mình thích, đạt được nhiều ước mơ và nguyện vọng của chính mình! 🎂❤️
             </div>
@@ -87,7 +87,7 @@
         input.addEventListener('keydown', (e) => { if(e.key === 'Enter') checkPW(); });
 
         function checkPW() {
-            if (input.value === '2011') {
+            if (input.value === '1234') {
                 document.getElementById('password-screen').style.display = 'none';
                 const main = document.getElementById('main-content');
                 main.style.display = 'block';
