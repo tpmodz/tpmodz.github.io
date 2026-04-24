@@ -78,10 +78,14 @@
     </div>
 
     <div class="music-bar" onclick="toggleMusic()">PHÁT NHẠC (nhạc j97 nha:)</div>
-    <video id="audio" loop style="display:none;"><source src="mt/amthanh.mp4"></video>
+
+    <audio id="audioTrack" loop>
+        <source src="mt/amthanh.mp4" type="audio/mp4">
+    </audio>
 
     <script>
         const input = document.getElementById('pwInput');
+        const audio = document.getElementById('audioTrack');
         
         // Nhấn Enter để kiểm tra
         input.addEventListener('keydown', (e) => { if(e.key === 'Enter') checkPW(); });
@@ -91,27 +95,26 @@
                 document.getElementById('password-screen').style.display = 'none';
                 const main = document.getElementById('main-content');
                 main.style.display = 'block';
-                setTimeout(() => { main.style.opacity = '1'; document.body.style.overflow = 'auto'; }, 50);
+                setTimeout(() => { main.style.opacity = '1'; }, 50);
                 startIcons();
             } else {
-                // Khi sai: Rung ô nhập và bôi đen để nhập lại ngay
                 input.classList.add('shake');
                 setTimeout(() => { 
                     input.classList.remove('shake'); 
-                    input.value = ''; // Xóa trắng
-                    input.focus();    // Đưa con trỏ vào lại
+                    input.value = ''; 
+                    input.focus(); 
                 }, 400);
             }
         }
 
         function startIcons() {
-            const icons = ['❤️', '🎉', '✨', '⭐'];
+            const icons = ['❤️', '🎉', '✨', '🎈', '🎂'];
             setInterval(() => {
                 const el = document.createElement('div');
                 el.className = 'float-icon';
                 el.innerText = icons[Math.floor(Math.random() * icons.length)];
                 el.style.left = Math.random() * 100 + 'vw';
-                el.style.fontSize = '25px';
+                el.style.fontSize = (Math.random() * 20 + 20) + 'px';
                 document.body.appendChild(el);
                 setTimeout(() => el.remove(), 6000);
             }, 400);
@@ -119,10 +122,14 @@
 
         let playing = false;
         function toggleMusic() {
-            const a = document.getElementById('audio');
-            if(!playing) a.play(); else a.pause();
+            if(!playing) {
+                audio.play().catch(e => console.log("Cần tương tác để phát nhạc"));
+                document.querySelector('.music-bar').innerText = 'DỪNG NHẠC (j97)';
+            } else {
+                audio.pause();
+                document.querySelector('.music-bar').innerText = 'PHÁT NHẠC (j97)';
+            }
             playing = !playing;
-            document.querySelector('.music-bar').innerText = playing ? 'DỪNG NHẠC' : 'PHÁT NHẠC';
         }
     </script>
 </body>
