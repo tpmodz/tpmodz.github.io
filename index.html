@@ -75,12 +75,10 @@
             </div>
             <img src="mt/image2.png" class="side-photo">
         </div>
-    </div>
-
     <div class="music-bar" onclick="toggleMusic()">PHÁT NHẠC (nhạc j97 nha:)</div>
 
     <audio id="audioTrack" loop>
-        <source src="mt/amthanh.mp4" type="audio/mp4">
+        <source src="mt/amthanh.mp3" type="audio/mpeg">
     </audio>
 
     <script>
@@ -88,7 +86,9 @@
         const audio = document.getElementById('audioTrack');
         
         // Nhấn Enter để kiểm tra
-        input.addEventListener('keydown', (e) => { if(e.key === 'Enter') checkPW(); });
+        input.addEventListener('keydown', (e) => { 
+            if(e.key === 'Enter') checkPW(); 
+        });
 
         function checkPW() {
             if (input.value === '2011') {
