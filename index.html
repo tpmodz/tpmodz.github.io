@@ -3,134 +3,245 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday MT</title>
+    <title>HPBD Trẫm 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #ff85a2; --accent: #ff4081; }
-        body, html { margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; background: #fff5f7; overflow: hidden; }
-
-        /* Màn hình mật khẩu */
-        #password-screen {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: white; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; z-index: 2000;
+        :root {
+            --cream: #FFFDD0;
+            --pink-soft: #FFB7C5;
+            --pink-dark: #FF8DA1;
+            --mes-red: #ff4757;
+            --mes-orange: #ff7f50;
         }
-        .banner-img { width: 85%; max-width: 350px; border-radius: 20px; margin-bottom: 20px; }
+
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Quicksand', sans-serif;
+            background-color: var(--cream);
+            overflow: hidden;
+            display: flex; justify-content: center; align-items: center;
+            height: 100vh;
+        }
+
+        /* --- MÀN HÌNH MẬT KHẨU --- */
+        #passcode-screen {
+            position: fixed; inset: 0;
+            background: var(--cream);
+            z-index: 1000;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .cover-img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid var(--pink-soft); margin-bottom: 10px; }
+        .passcode-display { font-size: 30px; letter-spacing: 15px; margin-bottom: 20px; color: var(--pink-dark); height: 40px; font-weight: bold; }
+        .keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .key { width: 65px; height: 65px; border-radius: 50%; border: none; background: #fff; font-size: 22px; font-weight: bold; color: var(--pink-dark); box-shadow: 0 4px 0 var(--pink-soft); cursor: pointer; }
+        .key:active { transform: translateY(4px); box-shadow: none; }
+        .key.del { background: var(--pink-soft); color: white; font-size: 14px; }
+
+        /* --- NỘI DUNG CHÍNH --- */
+        #main-content { 
+            visibility: hidden; opacity: 0; transition: 1s; 
+            text-align: center; width: 100%; height: 100%;
+            display: flex; flex-direction: column; align-items: center;
+            overflow-x: hidden; padding: 20px; box-sizing: border-box;
+        }
+
+        .hpbd-text { font-size: 22px; color: var(--pink-dark); margin-top: 60px; font-weight: bold; margin-bottom: 10px;}
+
+        /* --- HỘP QUÀ NẮP DÀI --- */
+        .gift-wrapper {
+            position: relative;
+            width: 80%; max-width: 300px;
+            aspect-ratio: 4 / 3;
+            cursor: pointer;
+            z-index: 10;
+            margin-top: 40px;
+        }
+
+        .gift-box-mes { 
+            width: 100%; height: 100%; 
+            background: var(--mes-red); 
+            border-radius: 10px;
+            position: relative; 
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 30px rgba(255, 71, 87, 0.4);
+        }
+
+        .gift-box-mes::before { content: ""; position: absolute; width: 25px; height: 100%; background: var(--mes-orange); }
+        .gift-box-mes::after { content: ""; position: absolute; width: 100%; height: 25px; background: var(--mes-orange); }
         
-        .input-group { text-align: center; position: relative; }
-        input[type="text"] {
-            padding: 15px; font-size: 24px; border: 3px solid var(--primary);
-            border-radius: 30px; outline: none; text-align: center; width: 180px;
-            display: block; margin: 0 auto 15px; transition: 0.3s;
-        }
-        /* Hiệu ứng rung khi sai */
-        .shake { animation: shake 0.4s; border-color: red !important; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-
-        .btn-confirm {
-            background: var(--primary); color: white; border: none;
-            padding: 12px 40px; border-radius: 25px; font-weight: bold;
-            cursor: pointer; box-shadow: 0 5px 15px rgba(255, 133, 162, 0.4);
+        .gift-cap { 
+            position: absolute; 
+            top: -15px; 
+            left: -5%; 
+            width: 110%; 
+            height: 40px; 
+            background: var(--mes-red); 
+            border-radius: 8px; 
+            border-bottom: 4px solid rgba(0,0,0,0.15); 
+            transition: 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+            z-index: 12;
         }
 
-        /* Trang chính */
-        #main-content { display: none; opacity: 0; transition: 1s; padding: 20px; text-align: center; }
-        .celebration-row { display: flex; align-items: center; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
-        .side-photo { width: 180px; height: 260px; object-fit: cover; border-radius: 15px; border: 4px solid white; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
-        
-        .message-box {
-            flex: 1; min-width: 280px; max-width: 450px; background: white;
-            padding: 25px; border-radius: 20px; border: 2px solid var(--primary);
-            line-height: 1.8; font-size: 1.1rem; color: #444;
+        .gift-text-hint { color: white; font-weight: bold; font-size: 16px; z-index: 11; pointer-events: none; }
+
+        .gift-wrapper.open .gift-cap { transform: translateY(-120px) rotate(-10deg); opacity: 0; }
+        .gift-wrapper.open { transform: scale(0); opacity: 0; pointer-events: none; transition: 0.5s; }
+
+        /* --- LÁ THƯ --- */
+        .mes-letter-wrapper {
+            display: none; width: 100%; max-width: 360px;
+            flex-direction: column; align-items: center;
+            animation: slideIn 0.8s ease forwards;
         }
 
-        .float-icon { position: fixed; bottom: -50px; animation: rise 6s linear infinite; z-index: 100; }
-        @keyframes rise { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-110vh); opacity: 0; } }
+        @keyframes slideIn { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
-        .music-bar { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 10px 25px; border-radius: 30px; cursor: pointer; font-weight: bold; z-index: 1500; }
+        .mes-letter-box {
+            width: 100%; background: white; padding: 20px;
+            border-radius: 20px; border: 4px solid var(--pink-soft);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08); box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .letter-img { width: 100%; max-width: 300px; border-radius: 15px; margin: 15px 0; display: block; margin-inline: auto; }
+
+        .close-btn {
+            background: var(--pink-soft); border: none; padding: 12px 25px;
+            border-radius: 20px; color: white; cursor: pointer; font-weight: bold; margin-bottom: 50px;
+        }
+
+        .audio-ctrl { position: fixed; top: 20px; right: 20px; background: white; border-radius: 30px; padding: 5px 15px; cursor: pointer; border: 2px solid var(--pink-soft); z-index: 100; font-weight: bold; }
+        .firework { position: absolute; width: 6px; height: 6px; border-radius: 50%; animation: explode 1s ease-out forwards; }
+        @keyframes explode { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(30); opacity: 0; } }
     </style>
 </head>
 <body>
 
-    <div id="password-screen">
-        <img src="mt/anhbia.png" class="banner-img">
-        <div class="input-group">
-            <h3 style="color: var(--accent);">Nhập mật khẩu năm sinh trẫm á><</h3>
-            <input type="text" id="pwInput" autocomplete="off" inputmode="numeric">
-            <button class="btn-confirm" onclick="checkPW()">MỞ QUÀ ✨</button>
+    <div id="passcode-screen">
+        <img src="mt/anhbia.png" class="cover-img">
+        <div id="status-msg" style="height:20px; font-size:14px; margin-bottom:5px; font-weight: bold;"></div>
+        <div class="passcode-display" id="display">****</div>
+        <div class="keypad">
+            <button class="key" onclick="press(1)">1</button><button class="key" onclick="press(2)">2</button><button class="key" onclick="press(3)">3</button>
+            <button class="key" onclick="press(4)">4</button><button class="key" onclick="press(5)">5</button><button class="key" onclick="press(6)">6</button>
+            <button class="key" onclick="press(7)">7</button><button class="key" onclick="press(8)">8</button><button class="key" onclick="press(9)">9</button>
+            <div style="width:65px"></div><button class="key" onclick="press(0)">0</button><button class="key del" onclick="clearPass()">XÓA</button>
         </div>
     </div>
 
     <div id="main-content">
-        <h1 style="color: #d81b60;">🎉 Chúc mừng sinh nhật Thư nhaaa 🎉</h1>
-        <div class="celebration-row">
-            <img src="mt/image1.png" class="side-photo">
-            <div class="message-box">
-                Chúc Thư sinh nhật vui vẻ tràn ngập hạnh phúc niềm vui ,làm được nhiều thứ mình thích. 
-                Tuổi mới  xinh  đẹp rực rỡ , không nóng giận không suy nghĩ lung tung trong cuộc sống không vướng những điều xa ngã  nhaaaa >< 
-                Không được nhịn ăn đó và luôn luôn gặp được may mắn , đạt được nhiều ước mơ và nguyện vọng của chính mình! 🎂❤️
-            </div>
-            <img src="mt/image2.png" class="side-photo">
+        <div class="audio-ctrl" onclick="toggleAudio()">🎵 Nhạc</div>
+        <h1 class="hpbd-text">Chúc mừng sinh nhật Trẫm nhaaaaa ><</h1>
+        
+        <div style="font-size: 20px; font-weight: bold; color: var(--pink-dark); background: white; padding: 8px 20px; border-radius: 50px; border: 2px solid var(--pink-soft);">
+            15 tuổi ><
         </div>
-    <div class="music-bar" onclick="toggleMusic()">PHÁT NHẠC (nhạc j97 nha:)</div>
 
-    <audio id="audioTrack" loop>
-        <source src="mt/amthanh.mp3" type="audio/mpeg">
-    </audio>
+        <div class="gift-wrapper" id="mainGift" onclick="handleOpenGift()">
+            <div class="gift-cap"></div>
+            <div class="gift-box-mes">
+                <span class="gift-text-hint">Bấm mở quà 🎁</span>
+            </div>
+        </div>
+
+        <div class="mes-letter-wrapper" id="mesLetter">
+            <div class="mes-letter-box">
+                <h2 style="color: var(--pink-dark);">Gửi Trẫm... 🎀</h2>
+                <img src="mt/image1.png" class="letter-img">
+                <p style="color: #444; line-height: 1.6; text-align: center;">
+                    Chúc Trẫm sinh nhật vui vẻ tràn ngập hạnh phúc niềm vui, làm được nhiều thứ mình thích. <br><br>
+            Tuổi mới xinh đẹp rực rỡ, không nóng giận không suy nghĩ lung tung trong cuộc sống không vướng những điều sa ngã nhaaaa >< <br><br>
+            <b>Không được nhịn ăn đó</b> và luôn luôn gặp được may mắn, đạt được nhiều ước mơ và nguyện vọng của chính mình!
+                </p>
+                <img src="mt/image2.png" class="letter-img">
+            </div>
+            <button class="close-btn" onclick="backToGift()">Đóng Thư ❤️</button>
+        </div>
+
+        <div id="bubbles-container" style="position:fixed; inset:0; pointer-events:none; z-index:99;"></div>
+    </div>
+
+    <audio id="bg-music" loop><source src="mt/amthanh.mp3" type="audio/mpeg"></audio>
 
     <script>
-        const input = document.getElementById('pwInput');
-        const audio = document.getElementById('audioTrack');
-        
-        // Nhấn Enter để kiểm tra
-        input.addEventListener('keydown', (e) => { 
-            if(e.key === 'Enter') checkPW(); 
-        });
+        let input = "";
+        const correctPass = "1234";
 
-        function checkPW() {
-            if (input.value === '2011') {
-                document.getElementById('password-screen').style.display = 'none';
-                const main = document.getElementById('main-content');
-                main.style.display = 'block';
-                setTimeout(() => { main.style.opacity = '1'; }, 50);
-                startIcons();
+        function press(num) {
+            if (input.length < 4) {
+                input += num;
+                updateDisplay();
+                if (input.length === 4) setTimeout(checkPass, 200);
+            }
+        }
+        function clearPass() { input = ""; updateDisplay(); document.getElementById('status-msg').innerHTML = ""; }
+        function updateDisplay() { document.getElementById('display').innerText = "ᵒ".repeat(input.length) || "****"; }
+
+        function checkPass() {
+            if (input === correctPass) {
+                document.getElementById('passcode-screen').style.display = 'none';
+                document.getElementById('main-content').style.visibility = 'visible';
+                document.getElementById('main-content').style.opacity = '1';
+                document.getElementById('bg-music').play();
+                launchFireworks();
+                startFloatingIcons();
             } else {
-                input.classList.add('shake');
-                setTimeout(() => { 
-                    input.classList.remove('shake'); 
-                    input.value = ''; 
-                    input.focus(); 
-                }, 400);
+                document.getElementById('status-msg').innerHTML = "😡 Sai mật khẩu rồi!";
+                document.getElementById('status-msg').style.color = "red";
+                input = ""; updateDisplay();
             }
         }
 
-        function startIcons() {
-            const icons = ['❤️', '🎉', '✨', '🎈', '🎂'];
+        function handleOpenGift() {
+            document.getElementById('mainGift').classList.add('open');
+            setTimeout(() => {
+                document.getElementById('mainGift').style.display = 'none';
+                document.getElementById('mesLetter').style.display = 'flex';
+                document.getElementById('main-content').style.overflowY = 'auto';
+            }, 600);
+        }
+
+        function backToGift() {
+            document.getElementById('mesLetter').style.display = 'none';
+            const gift = document.getElementById('mainGift');
+            gift.style.display = 'block';
+            gift.classList.remove('open');
+            gift.style.transform = 'scale(1)';
+            gift.style.opacity = '1';
+            gift.style.pointerEvents = 'auto';
+            document.getElementById('main-content').style.overflowY = 'hidden';
+            document.getElementById('main-content').scrollTo(0, 0);
+        }
+
+        function launchFireworks() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    let fw = document.createElement('div');
+                    fw.className = 'firework';
+                    fw.style.left = Math.random() * 100 + "vw"; fw.style.top = Math.random() * 100 + "vh";
+                    fw.style.background = `hsl(${Math.random() * 360}, 100%, 75%)`;
+                    document.body.appendChild(fw);
+                    setTimeout(() => fw.remove(), 1000);
+                }, i * 150);
+            }
+        }
+
+        function startFloatingIcons() {
             setInterval(() => {
-                const el = document.createElement('div');
-                el.className = 'float-icon';
-                el.innerText = icons[Math.floor(Math.random() * icons.length)];
-                el.style.left = Math.random() * 100 + 'vw';
-                el.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                document.body.appendChild(el);
-                setTimeout(() => el.remove(), 6000);
-            }, 400);
+                const b = document.createElement('div');
+                b.innerText = ['❤️', '✨', '💖', '🌸'][Math.floor(Math.random() * 4)];
+                b.style.cssText = `position:fixed; bottom:-50px; left:${Math.random()*100}vw; font-size:25px; animation:flyIcon 4s linear; z-index:99; opacity:0.7;`;
+                document.getElementById('bubbles-container').appendChild(b);
+                setTimeout(() => b.remove(), 4000);
+            }, 500);
         }
 
-        let playing = false;
-        function toggleMusic() {
-            if(!playing) {
-                audio.play().catch(e => console.log("Cần tương tác để phát nhạc"));
-                document.querySelector('.music-bar').innerText = 'DỪNG NHẠC (j97)';
-            } else {
-                audio.pause();
-                document.querySelector('.music-bar').innerText = 'PHÁT NHẠC (j97)';
-            }
-            playing = !playing;
+        function toggleAudio() {
+            let m = document.getElementById('bg-music');
+            m.paused ? m.play() : m.pause();
         }
     </script>
+    <style>@keyframes flyIcon { to { transform: translateY(-110vh) rotate(360deg); opacity: 0; } }</style>
 </body>
 </html>
