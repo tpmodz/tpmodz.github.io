@@ -80,13 +80,24 @@
 
 <div id="ui-overlay">
     <div class="menu-card">
-        <h2>🏆 DOG RACING 🏆</h2>
-        <textarea id="nameList" placeholder="Nhập tên từng con hoặc chọn số ở dưới ..."></textarea>
-        <div style="display:flex; gap:10px; margin-bottom:15px">
-            <input type="number" id="sl" value="10" title="Số lượng">
-            <input type="number" id="tg" value="15" title="Giây tối đa">
+        <h2>🏆 TP MODZ RACING 🏆</h2>
+        <div style="text-align: left; margin-bottom: 10px;">
+            <label style="font-weight: 900; font-size: 14px;">📝 DANH SÁCH TÊN:</label>
+            <textarea id="nameList" placeholder="Nhập tên mỗi dòng 1 con..."></textarea>
         </div>
-        <button id="start-btn" onclick="startRace()">BẮT ĐẦU ĐUA</button>
+
+        <div style="display:flex; gap:10px; margin-bottom:15px; text-align: left;">
+            <div style="flex: 1;">
+                <label style="display: block; font-weight: 900; font-size: 12px; margin-bottom: 5px;">🐶 SỐ LƯỢNG:</label>
+                <input type="number" id="sl" value="10" style="width: 100%; text-align: center;">
+            </div>
+            <div style="flex: 1;">
+                <label style="display: block; font-weight: 900; font-size: 12px; margin-bottom: 5px;">⏱️ GIÂY ĐUA:</label>
+                <input type="number" id="tg" value="15" style="width: 100%; text-align: center;">
+            </div>
+        </div>
+
+        <button id="start-btn" onclick="startRace()">BẮT ĐẦU ĐUA 🚀</button>
     </div>
 </div>
 
