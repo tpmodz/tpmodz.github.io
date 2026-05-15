@@ -81,21 +81,32 @@
 <div id="ui-overlay">
     <div class="menu-card">
         <h2>🏆 TP MODZ RACING 🏆</h2>
-        <div style="text-align: left; margin-bottom: 10px;">
-            <label style="font-weight: 900; font-size: 14px;">📝 DANH SÁCH TÊN:</label>
-            <textarea id="nameList" placeholder="Nhập tên mỗi dòng 1 con..."></textarea>
+        
+        <div style="text-align: left;">
+            <label style="font-weight: 900; font-size: 14px; color: #2d3436;">📝 NHẬP DANH SÁCH TÊN:</label>
+            <textarea id="nameList" placeholder="Mỗi dòng 1 tên..."></textarea>
         </div>
-<b>hoặc</b>
-        <div style="display:flex; gap:10px; margin-bottom:15px; text-align: left;">
-            <div style="flex: 1;">
-                <label style="display: block; font-weight: 900; font-size: 12px; margin-bottom: 5px;">🐶 SỐ LƯỢNG:</label>
-                <input type="number" id="sl" value="10" style="width: 100%; text-align: center;">
-            </div>
-            <div style="flex: 1;">
-                <label style="display: block; font-weight: 900; font-size: 12px; margin-bottom: 5px;">⏱️ GIÂY ĐUA:</label>
-                <input type="number" id="tg" value="15" style="width: 100%; text-align: center;">
-            </div>
+
+        <div style="margin: 10px 0; font-weight: 900; color: #636e72; font-size: 14px;">—<b> HOẶC </b> —</div>
+
+        <div style="text-align: left; margin-bottom: 20px;">
+            <label style="font-weight: 900; font-size: 14px; color: #0984e3;">🐶 SỐ LƯỢNG CHÓ:</label>
+            <input type="number" id="sl" value="10" style="width: 100%; text-align: center; margin-top: 5px;">
         </div>
+
+        <div style="text-align: left; margin-bottom: 25px;">
+            <div style="display: flex; justify-content: space-between;">
+                <label style="font-weight: 900; font-size: 14px; color: #e17055;">⏱️ THỜI GIAN ĐUA:</label>
+                <span id="timeVal" style="font-weight: 900; color: #e17055;">15 Giây</span>
+            </div>
+            <input type="range" id="tg" min="10" max="30" value="15" 
+                   style="width: 100%; cursor: pointer; margin-top: 10px;" 
+                   oninput="document.getElementById('timeVal').innerText = this.value + ' Giây'">
+        </div>
+
+        <button id="start-btn" onclick="startRace()">BẮT ĐẦU ĐUA 🚀</button>
+    </div>
+</div>
 
         <button id="start-btn" onclick="startRace()">BẮT ĐẦU ĐUA 🚀</button>
     </div>
